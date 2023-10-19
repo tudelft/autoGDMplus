@@ -1,0 +1,58 @@
+### USD and OBJ files ###
+*.usd
+*.usdc
+# *.obj
+*.mtl
+*.tga
+
+### OpenFOAM & CFD ###
+CFD/
+
+### Visual Studio Code ###
+.vscode
+# !.vscode/settings.json
+# !.vscode/tasks.json
+# !.vscode/launch.json
+# !.vscode/extensions.json
+# !.vscode/*.code-snippets
+
+# Local History for Visual Studio Code
+.history/
+
+# Built Visual Studio Code Extensions
+*.vsix
+
+### Python ###
+__pycache__
+warehouse_gen/__pycache__
+*old.py
+
+### config files ###
+config/*
+!config/default.yaml
+!config/current.yaml
+
+### environments dir ###
+environments/cfd/*
+!environments/cfd/default_cfd_case/
+environments/recipes/*
+environments/geometry/*
+environments/isaac_sim/*
+environments/ROS/empty_project_old/
+environments/gas_data/*
+environments/wind_data/*
+environments/occupancy/*
+
+### gaden_ws directory ###
+gaden_ws/.catkin_tools
+gaden_ws/.catkin_workspace
+gaden_ws/.vscode
+gaden_ws/build/
+gaden_ws/devel/
+gaden_ws/install/
+gaden_ws/logs/
+gaden_ws/src/gaden/test_env/warehouse
+
+gaden_ws/src/gaden/envs/*
+!gaden_ws/src/gaden/envs/*.txt
+!gaden_ws/src/gaden/envs/*.xml

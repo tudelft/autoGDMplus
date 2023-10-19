@@ -1,0 +1,51 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  v2212                                 |
+|   \\  /    A nd           | Website:  www.openfoam.com                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       volScalarField;
+    object      epsilon; // dissipation rate
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+// EXAMPLE CALCULATION
+// (estimate turbulent length scale l to be 10% of the width of the inlet)
+// (0.09^0.75 * 0.0234^1.5) / (0.1 * 4) = 0.00147 
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+dimensions      [0 2 -3 0 0 0 0];
+
+internalField   uniform 0.00147;
+
+boundaryField
+{
+    inlet
+    {
+        type            fixedValue;
+        value           uniform 0.00147;
+    }
+    
+    outlet
+    {
+        type            zeroGradient; // Von-Neumann Boundary condition
+    }
+    
+    interior
+    {
+        type            epsilonWallFunction;
+        value           uniform 0.00147;
+    }
+    
+    sides
+    {
+        type            epsilonWallFunction;
+        value           uniform 0.00147;
+    }
+}
+
+
+// ************************************************************************* //

@@ -1,0 +1,159 @@
+---
+# default.yaml
+# these are the default settings for AutoGDM2
+  comment: 'default' # ! should not contain spaces, not used when left empty
+  
+  directories:
+    asset_dir        : "{HOME_DIR}/Omniverse_content/ov-industrial3dpack-01-100.1.1/" # omniverse content folder
+    config_dir       : "{AutoGDM2_dir}/config/"               # configs folder
+    asset_mockup_dir : "{AutoGDM2_dir}/assets/mockup/"        # mockup folder with simple versions of assets
+    asset_custom_dir : "{AutoGDM2_dir}/assets/isaac_custom/"  # altered omniverse assets
+    recipe_dir       : "{AutoGDM2_dir}/environments/recipes/" # recipe folder
+    usd_scene_dir    : "{AutoGDM2_dir}/environments/isaac_sim/" # isaac_sim scenes location
+    geometry_dir     : "{AutoGDM2_dir}/environments/geometry/" # geometry folder
+    cfd_dir          : "{AutoGDM2_dir}/environments/cfd/"      # cfd folder
+    gas_data_dir     : "{AutoGDM2_dir}/environments/gas_data/" # gas data folder
+    wind_data_dir    : "{AutoGDM2_dir}/environments/wind_data/" # wind data folder
+    occ_data_dir     : "{AutoGDM2_dir}/environments/occupancy/" # occupancy data folder 
+    empty_ros_dir    : "{AutoGDM2_dir}/environments/ROS/empty_project/"
+    gaden_env_dir    : "{AutoGDM2_dir}/gaden_ws/src/gaden/envs/" # ROS GADEN workspace
+
+  software:
+    isaac_sim:
+      version     : "2022.2.0"
+      isaac_dir   : "{HOME_DIR}/.local/share/ov/pkg/isaac_sim-{ISAAC_VERSION}"
+      wh_gen_dir  : "{isaac_dir}/exts/omni.isaac.examples/omni/isaac/examples/warehouse_gen"
+    blender:
+      version     : "3.5.0"
+      blender_dir : "{HOME_DIR}/Downloads/blender-{BLENDER_VERSION}-linux-x64"
+    openfoam:
+      version     : "v2212"
+      openfoam_dir: "{HOME_DIR}/OpenFOAM/OpenFOAM-{OPENFOAM_VERSION}"
+  
+  environment:
+    env_types: ['wh_empty', 'wh_simple', 'wh_complex']
+    env_type: 1 # 0, 1, 2
+    env_amount: 1
+    env_size: [10.0, 16.0, 8.0]
+
+  env_wh:
+    inlet_size  : [1.5,2.4] # [Y,Z], [m]
+    inlet_vel   : [1.0, 0.0, 0.0] # [X, Y,Z], [m/s]
+    outlet_size : [1.5,2.4] # [Y,Z], [m]
+    emptyfullrackdiv : 0.2  # least percentage of filled racks
+    white_walls : False     # all-white walls instead of the default white-yellow
+
+  cfd:
+    mesh:
+      minCellSize      : 0.2 # it is recommended to keep these values uniform
+      maxCellSize      : 0.2 # for easy of meshing, cfd calculation and mesh quality
+      boundaryCellSize : 0.2
+      localRefinement  : 0.0  # set to 0.0 to leave inactive
+    solving:
+      threads         : 0 # set to 0 to use all but 2 threads for max performance
+      endTime         : 5.0 # [s]
+      writeInterval   : 1.0 # [s]
+      maxCo           : 1.0 # max Courant number, decrease in case of cfd failing
+      maxDeltaT       : 0.0 # set to 0.0 to leave inactive
+      nOuterCorrectors: 1 # 1= PISO mode, increase (to ~>10) when running at high (>2) Courant numbers
+      k               : 0.0 # will be calculated based on other settings
+      epsilon         : 0.0 # will be calculated based on other settings
+      latestTime      : True # use the latest timestep as steadystate
+      timeRange       : '3:5' # [s] select the time range to be post-processed, latestTime must be False!
+
+  gas_dispersal:
+    src_placement_types : ['specific', 'random'] # random setting is not implemented yet!
+    src_placement_type  : 0
+    src_placement       : [5.0, 1.0, 2.0] # [X Y Z] [m] for 'specific' placement_type only
+    gas_type            : 0   # 0=Ethanol, 1=Methane, 2=Hydrogen
+    sim_time            : 500 # [sec] Total time of the gas dispersion simulation
+    time_step           : 0.2 # [sec] Time increment between snapshots. Set aprox = cell_size/max_wind_speed
+    wind_looping        : 'true' # 'true'/'false' (not True/False!)
+    wind_start_step     : 0
+    wind_stop_step      : 3
+
+  assets:
+    ############################# OMNIVERSE ASSETS #############################
+    empty_racks : "{asset_dir}Shelves/"
+    filled_racks: "{asset_dir}Racks/"
+    piles       : "{asset_dir}Piles/"
+    railings    : "{asset_dir}Railing/"
+    # warehouse shell-specific assets (floor, walls, ceiling etc.)
+    isaac_wh_props: "{HOME_DIR}/Omniverse_content/isaac-simple-warehouse/Props/"
+    isaac_custom: "{asset_custom_dir}"
+    floor: "SM_floor02.usd"
+    walls:
+      - "SM_WallA_InnerCorner.usd"
+      - "SM_WallB_InnerCorner.usd"
+      - "SM_WallA_6M.usd"
+      - "SM_WallB_6M.usd"
+    lights:
+      - "SM_LampCeilingA_04.usd" # off
+      - "SM_LampCeilingA_05.usd" # ! CUSTOM ASSET!!! (lamp is on instead of off)
+    # stand-alone assets
+    forklift_asset : "{HOME_DIR}/Omniverse_content/ov-sig22-physics-01-100.1.0/Assets/Warehouse/Equipment/Forklifts/Forklift_A/Forklift_A01_PR_V_NVD_01.usd"
+    robot_asset: "transporter.usd"
+    # assets from the paths above to choose from
+    empty_racks_large_asset:
+      - "RackLargeEmpty_A1.usd"
+      - "RackLargeEmpty_A2.usd"
+    empty_racks_long_asset:
+      - "RackLongEmpty_A1.usd"
+      - "RackLongEmpty_A2.usd"
+    filled_racks_large_asset: 
+      - "RackLarge_A1.usd"
+      - "RackLarge_A2.usd"
+      - "RackLarge_A3.usd"
+      - "RackLarge_A4.usd"
+      - "RackLarge_A5.usd"
+      - "RackLarge_A6.usd"
+      - "RackLarge_A7.usd"
+      - "RackLarge_A8.usd"
+      - "RackLarge_A9.usd"
+    filled_racks_small_asset: 
+      - "RackSmall_A1.usd"
+      - "RackSmall_A2.usd"
+      - "RackSmall_A3.usd"
+      - "RackSmall_A4.usd"
+      - "RackSmall_A5.usd"
+      - "RackSmall_A6.usd"
+      - "RackSmall_A7.usd"
+      - "RackSmall_A8.usd"
+      - "RackSmall_A9.usd"
+    filled_racks_long_asset:
+      - "RackLong_A1.usd"
+      - "RackLong_A2.usd"
+      - "RackLong_A3.usd"
+      - "RackLong_A4.usd"
+      - "RackLong_A5.usd"
+      - "RackLong_A6.usd"
+      - "RackLong_A7.usd"
+    filled_racks_long_high_asset: 
+      - "RackLong_A8.usd"
+      - "RackLong_A9.usd"
+    piles_asset: 
+      - "WarehousePile_A1.usd"
+      - "WarehousePile_A2.usd"
+      - "WarehousePile_A3.usd"
+      - "WarehousePile_A4.usd"
+      - "WarehousePile_A5.usd"
+      - "WarehousePile_A6.usd"
+      - "WarehousePile_A7.usd"
+    railings_asset:
+      - "MetalFencing_A1.usd"
+      - "MetalFencing_A2.usd"
+      - "MetalFencing_A3.usd"
+    ############################# MOCKUP ASSETS #############################
+    empty_racks_mockup:  "{asset_mockup_dir}Shelves/"
+    filled_racks_mockup: "{asset_mockup_dir}Racks/"
+    forklift_mockup:     "{asset_mockup_dir}Forklifts/"
+    piles_mockup:        "{asset_mockup_dir}Piles/"
+    empty_racks_long_asset_mockup:
+      - "RackLongEmpty_A1.obj"
+      - "RackLongEmpty_A2.obj"
+    filled_racks_long_asset_mockup: "RackLong.obj"
+    forklift_asset_mockup: "Forklift_A01_PR_V_NVD_01.obj"
+    piles_asset_mockup:
+      - "WarehousePile_A4.obj"
+      - "WarehousePile_A5.obj"
+      - "WarehousePile_A7.obj"

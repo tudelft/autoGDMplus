@@ -1,0 +1,47 @@
+<!-- Mission file for GADEN preprocessing
+    ROS - KINETIC
+-->
+
+<launch>
+    <arg name="scenario" default="warehouse" />
+    
+    <node pkg="gaden_preprocessing" type="preprocessing" name="preprocessing" output="screen" required="true">
+
+        #Cell size
+        <param name="cell_size" value="0.20"/>    
+        
+        #CAD models of the enviroment (.stl) (! do not delete the empty lines, required for extra models if necesseary)
+        <param name="number_of_models" value="2"/>
+        <param name="model_0" value="$(find envs)/$(arg scenario)/cad_models/walls_ascii.stl"/> #Walls
+        <param name="model_1" value="$(find envs)/$(arg scenario)/cad_models/interior_ascii.stl"/> #Interior
+
+
+
+
+
+                
+        #CAD model of the outlets (.stl)
+        <param name="number_of_outlet_models" value="2"/>
+        <param name="outlets_model_0" value="$(find envs)/$(arg scenario)/cad_models/outlet_ascii.stl"/> #Outlet
+        <param name="outlets_model_1" value="$(find envs)/$(arg scenario)/cad_models/inlet_ascii.stl"/> #Inlet
+
+
+
+
+
+
+        #3D Location of a point in free-space
+        <param name="empty_point_x" value="1.0"/>      ### (m)
+        <param name="empty_point_y" value="1.0"/>      ### (m)
+        <param name="empty_point_z" value="1.0"/>      ### (m)
+
+        <param name="worldFile" value="$(find envs)/$(arg scenario)/launch/ros/stage.world"/>      ### leave empty if you dont want it to be automatically modified
+
+        #Wind Data (the node will append _i.csv to the name that is specified here)
+        <param name="wind_files" value="$(find envs)/$(arg scenario)/wind_simulations/1ms/wind_at_cell_centers"/>
+
+        #Where to write the output files
+        <param name="output_path" value="$(find envs)/$(arg scenario)" />
+    </node>
+</launch>
+
