@@ -1,7 +1,7 @@
-# AutoGDM2
+# AutoGDM+
 ### Automated Pipeline for 3D Gas Dispersal Modelling and Environment Generation
 
-This repository contains the code of AutoGDM2 based on the same concepts as [AutoGDM](https://github.com/tudelft/AutoGDM/). Please fully read this before proceeding.
+This repository contains the code of AutoGDM+ based on the same concepts as [AutoGDM](https://github.com/tudelft/AutoGDM/). Please fully read this before proceeding.
 
 ## Required
 - Tested on `Ubuntu 20.04 LTS`
@@ -21,7 +21,7 @@ Follow [these instructions:](https://docs.omniverse.nvidia.com/install-guide/lat
 4) Download the necessery content:
     - From the the exchange tab in the launcher, download both the 'Industrial 3D Models Pack' and the 'USD Physics Sample Pack' by clicking 'Save as...' (right part of the green download button).
     - From the Nucleus tab in the launcher, go to `localhost/NVIDIA/Assets/Isaac/<version>/Isaac/Environments/Simple_Warehouse` and download these contents by clicking the download button in the details pane on the right.
-    - Extract these folders to `~/Omniverse_content` so that AutoGDM2 can find them. Another location can be specified with in the settings of AutoGDM2 if placed somewhere else.
+    - Extract these folders to `~/Omniverse_content` so that AutoGDM+ can find them. Another location can be specified with in the settings of AutoGDM+ if placed somewhere else.
 
 ### Blender
 - Download and extract the blender.zip to a location of your preference, in this case `~/Downloads/blender-<version>-linux-x64`
@@ -55,41 +55,41 @@ alias of2212='source $HOME/OpenFOAM/OpenFOAM-v2212/etc/bashrc'
 1) Install [ROS noetic](http://wiki.ros.org/noetic/Installation/Ubuntu)
 2) Install [catkin tools](https://catkin-tools.readthedocs.io/en/latest/installing.html)
 
-### AutoGDM2
+### AutoGDM+
 - Clone this repository, preferably in your home directory.
 - Install the isaac_asset_placer: Copy and paste the `warehouse_gen` folder into the Isaac Sim examples folder located at `~/.local/share/ov/pkg/isaac_sim-<version>/exts/omni.isaac.examples/omni/isaac/examples/`
 - Build the GADEN workspace:
 ```
 source /opt/ros/noetic/setup.bash
-cd AutoGDM2/gaden_ws
+cd autoGDMplus/gaden_ws
 catkin init
 catkin build
 ```
 
-## Before Running AutoGDM2
-1) Check the asset file locations and software versions in `~/AutoGDM2/config/current.yaml`, especially:
+## Before Running AutoGDM+
+1) Check the asset file locations and software versions in `~/autoGDMplus/config/current.yaml`, especially:
     - `asset_dir` (line 8)
     - `isaac_wh_props` (line 80)
     - `forlift_asset` (line 93)
-2) Define desired settings in `~/AutoGDM2/config/current.yaml`
+2) Define desired settings in `~/autoGDMplus/config/current.yaml`
 3) Source your openfoam installation (with the previously created alias)
 ```
 of2212
 ```
 4) source the GADEN workspace
 ```
-cd AutoGDM2/gaden_ws
+cd autoGDMplus/gaden_ws
 source devel/setup.bash
 ```
 
-## Run AutoGDM2
+## Run AutoGDM+
 ```
-cd AutoGDM2
+cd autoGDMplus
 python3 main.py
 ```
 
 ## Troubleshooting
-### Running AutoGDM2
+### Running AutoGDM+
 - `could not find .../combined.fms` 
     - Solution: source your OpenFOAM installation before running
 ### Omniverse launcher
@@ -98,7 +98,7 @@ python3 main.py
 
 
 ## Contact
-Please reach out to us if you encounter any problems or suggestions. AutoGDM2 is a work in progress, we are excited to see it beeing used! Reach out to Hajo for all technical questions.
+Please reach out to us if you encounter any problems or suggestions. AutoGDM+ is a work in progress, we are excited to see it beeing used! Reach out to Hajo for all technical questions.
 
 ### Contributors
 Hajo Erwich - Student & Maintainer - hajo_erwich@live.nl <br />
